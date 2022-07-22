@@ -1,3 +1,4 @@
+const { render } = require("jade");
 const User = require("../model/user");
 
 exports.create = function (req, res) {
@@ -14,9 +15,9 @@ exports.doCreate = function (req, res) {
     function (err, user) {
       if (err) {
         if (err.code === 11000) {
-          res.redirect("/user/new?exists=true");
+          return res.redirect("/user/new?exists=true");
         } else {
-          res.redirect("/user/new?error=true");
+          return res.redirect("/user/new?error=true");
         }
       } else {
         // Success
@@ -27,12 +28,57 @@ exports.doCreate = function (req, res) {
           _id: user._id,
         };
         req.session.loggedIn = true;
+        console.log(req.session);
         res.redirect("/user");
       }
-
-      // console.log(user.id);
     }
   );
-  // res.status(200).json("sent sucess");
-  res.redirect("/user/new");
+};
+
+exports.index = function (req, res) {
+  if (!req.session.loggedIn) {
+    res.redirect("/login");
+  }
+  res.render("user-page", {
+    title: req.session.user.name,
+    name: req.session.user.name,
+    email: req.session.user.email,
+    userID: req.session.user._id,
+  });
+};
+
+exports.login = function (req, res) {
+  res.render("login-form", {
+    title: "Login",
+  });
+};
+exports.doLogin = function (req, res) {
+  if (req.body.Email) {
+    User.findOne(
+      {
+        email: req.body.Email,
+      },
+      "_id name email ",
+      function (err, user) {
+        if (!err) {
+          if (!user) {
+            res.redirect("/login?404=user");
+          } else {
+            req.session.user = {
+              name: user.name,
+              email: user.email,
+              id: user._id,
+            };
+            req.session.loggedin = true;
+            console.log("Logged in user: " + user);
+            res.redirect("/user");
+          }
+        } else {
+          res.redirect("/login?404=error");
+        }
+      }
+    );
+  } else {
+    res.redirect("/login?404=error");
+  }
 };

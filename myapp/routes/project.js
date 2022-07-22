@@ -1,12 +1,3 @@
-var mongoose = require("mongoose");
+exports.create = function (req, res) {};
 
-var projectSchema = new mongoose.Schema({
-  projectName: String,
-  createdOn: { type: Date, default: Date.now },
-  modifiedOn: Date,
-  createdBy: String,
-  contributors: String,
-  tasks: String,
-});
-
-mongoose.model("Project", projectSchema);
+exports.doCreate = function (req, res) {};

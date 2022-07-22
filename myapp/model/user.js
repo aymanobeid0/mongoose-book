@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 var userSchema = new mongoose.Schema({
   name: String,
-  email: { type: String, unique: true },
+  email: { type: String },
   createdOn: Date,
   lastName: { type: String },
   modifiedOn: { type: Date, default: () => Date.now() },

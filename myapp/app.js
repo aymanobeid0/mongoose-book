@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var session = require("express-session");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -11,6 +12,29 @@ var userModel = require("./model/user");
 var user = require("./routes/user");
 
 var app = express();
+var db = require("./model/db");
+
+// // const ayman = userModel
+// //   .find({ name: "samer" }, "name email", { sort: { lastLogin: +1 } })
+// //   .exec()
+// //   .then((user) => {
+// //     console.log(user);
+// //   });
+
+// userModel.find({ name: "ayman" }, "name email", function (err, users) {
+//   if (!err) {
+//     console.log(users);
+//   }
+// });
+// userModel.findOne(
+//   {
+//     name: "samer",
+//   },
+//   (err, user) => {
+//     console.log(err);
+//     console.log(user);
+//   }
+// );
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -22,24 +46,34 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: oneDay },
+  })
+);
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-// app.use("/", indexRouter);
+
 // user routes goes here
-// app.get("/user", user.index);
+app.get("/user", user.index);
 app.get("/user/new", user.create);
 app.post("/user/new", user.doCreate);
 // app.get("/user/edit", user.edit);
 // app.post("/user/edit", user.doEdit);
 // app.get("/user/delete", user.confirmDelete);
 // app.post("/user/delete", user.doDelete);
-// app.get("/login", user.login);
-// app.post("/login", user.doLogin);
+app.get("/login", user.login);
+app.post("/login", user.doLogin);
 // app.get("/logout", user.doLogout);
 
 // PROJECT ROUTES
-// app.get("/project/new", project.create);
-// app.post("/project/new", project.doCreate);
+app.get("/project/new", project.create);
+app.post("/project/new", project.doCreate);
 // app.get("/project/:id", project.displayInfo);
 // app.get("/project/edit/:id", project.edit);
 // app.post("/project/edit/:id", project.doEdit);
@@ -62,7 +96,6 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-var db = require("./model/db");
 app.listen(3000, () => {
   console.log("server connected");
 });
