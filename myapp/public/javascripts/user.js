@@ -13,13 +13,14 @@ $(document).ready(function () {
           var intItem,
             totalItems = data.length;
           arrLI = [];
-          for (intItem = totalItems - 1; intItem >= 0; intItem--) {
+          for (intItem = 0; intItem <= totalItems - 1; intItem++) {
             arrLI.push(
-              '<a href="/project/' +
-                data[intItem]._id +
-                '">' +
-                data[intItem].projectName +
-                "</a>"
+              // '<a href="/project/' +
+              //   data[intItem]._id +
+              //   '">' +
+              //   data[intItem].projectName +
+              //   "</a>",
+              `<a href="/project/${data[intItem]._id}"> ${data[intItem].projectName}  </a>`
             );
           }
           strHTMLOutput = "<li>" + arrLI.join("</li><li>") + "</li>";

@@ -16,8 +16,8 @@ var app = express();
 var db = require("./model/db");
 
 // var newproject = Project({
-//   projectName: "javascript ",
-//   createdBy: "62e119f2509a9014d09ea763",
+//   projectName: "facebook ",
+//   createdBy: "62d860258fe5846c6fb9ac3d",
 // });
 // newproject.save();
 

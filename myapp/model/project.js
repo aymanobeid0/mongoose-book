@@ -14,7 +14,7 @@ projectSchema.statics.findByUserID = function (userid, callback) {
   this.find(
     { createdBy: userid },
     "id projectName ",
-    { sort: { createdOn: 1 } },
+    { sort: { createdOn: -1 } },
     callback
   );
 };
