@@ -16,7 +16,7 @@ var app = express();
 var db = require("./model/db");
 
 // var newproject = Project({
-//   projectName: "facebook ",
+//   projectName: "javascript ",
 //   createdBy: "62e119f2509a9014d09ea763",
 // });
 // newproject.save();
@@ -105,5 +105,5 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(3000, () => {
-  console.log("server connected");
+  console.log("server connected localhost:3000");
 });

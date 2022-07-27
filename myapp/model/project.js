@@ -13,8 +13,8 @@ var projectSchema = new mongoose.Schema({
 projectSchema.statics.findByUserID = function (userid, callback) {
   this.find(
     { createdBy: userid },
-    "id projectName",
-    { sort: "modifiedOn" },
+    "id projectName ",
+    { sort: { createdOn: 1 } },
     callback
   );
 };

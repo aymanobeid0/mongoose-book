@@ -27,6 +27,7 @@ $(document).ready(function () {
       } else {
         strHTMLOutput = "<li>You haven't created any projects yet</li>";
       }
+      //select the item with the id myprojects
       $("#myprojects").html(strHTMLOutput);
     },
   });
