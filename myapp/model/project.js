@@ -9,4 +9,14 @@ var projectSchema = new mongoose.Schema({
   tasks: String,
 });
 
+// define ststics on the schema
+projectSchema.statics.findByUserID = function (userid, callback) {
+  this.find(
+    { createdBy: userid },
+    "id projectName",
+    { sort: "modifiedOn" },
+    callback
+  );
+};
+
 module.exports = mongoose.model("Project", projectSchema);

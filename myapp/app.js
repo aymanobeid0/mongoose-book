@@ -9,10 +9,17 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var project = require("./routes/project");
 var userModel = require("./model/user");
+var Project = require("./model/project");
 var user = require("./routes/user");
 
 var app = express();
 var db = require("./model/db");
+
+// var newproject = Project({
+//   projectName: "facebook ",
+//   createdBy: "62e119f2509a9014d09ea763",
+// });
+// newproject.save();
 
 // // const ayman = userModel
 // //   .find({ name: "samer" }, "name email", { sort: { lastLogin: +1 } })
@@ -75,6 +82,7 @@ app.post("/login", user.doLogin);
 app.get("/project/new", project.create);
 app.post("/project/new", project.doCreate);
 // app.get("/project/:id", project.displayInfo);
+app.get("/project/byuser/:userid", project.byUser);
 // app.get("/project/edit/:id", project.edit);
 // app.post("/project/edit/:id", project.doEdit);
 // app.get("/project/delete/:id", project.confirmDelete);

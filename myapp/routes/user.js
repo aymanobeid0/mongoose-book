@@ -36,15 +36,16 @@ exports.doCreate = function (req, res) {
 };
 
 exports.index = function (req, res) {
-  if (!req.session.loggedIn) {
-    res.redirect("/login");
+  if (!req.session.loggedin) {
+    return res.redirect("/login");
+  } else {
+    return res.render("user-page", {
+      title: req.session.user.name,
+      name: req.session.user.name,
+      email: req.session.user.email,
+      userID: req.session.user.id,
+    });
   }
-  res.render("user-page", {
-    title: req.session.user.name,
-    name: req.session.user.name,
-    email: req.session.user.email,
-    userID: req.session.user._id,
-  });
 };
 
 exports.login = function (req, res) {
@@ -62,7 +63,7 @@ exports.doLogin = function (req, res) {
       function (err, user) {
         if (!err) {
           if (!user) {
-            res.redirect("/login?404=user");
+            return res.redirect("/login?404=user");
           } else {
             req.session.user = {
               name: user.name,
@@ -71,14 +72,15 @@ exports.doLogin = function (req, res) {
             };
             req.session.loggedin = true;
             console.log("Logged in user: " + user);
-            res.redirect("/user");
+            console.log(req.session.user.id);
+            return res.redirect("/user");
           }
         } else {
-          res.redirect("/login?404=error");
+          return res.redirect("/login?404=error");
         }
       }
     );
   } else {
-    res.redirect("/login?404=error");
+    return res.redirect("/login?404=error");
   }
 };
