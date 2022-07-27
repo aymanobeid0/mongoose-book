@@ -20,7 +20,7 @@ $(document).ready(function () {
               //   '">' +
               //   data[intItem].projectName +
               //   "</a>",
-              `<a href="/project/${data[intItem]._id}"> ${data[intItem].projectName}  </a>`
+              `<a href="/project/${data[intItem]._id}">  ${data[intItem].projectName}  </a>`
             );
           }
           strHTMLOutput = "<li>" + arrLI.join("</li><li>") + "</li>";
